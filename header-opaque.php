@@ -1,3 +1,10 @@
+<?php
+
+$sqlCategories = "SELECT * FROM blog_category";
+$queryCategories = mysqli_query($conn, $sqlCategories);
+
+?>
+ 
  <!-- header
     ================================================== -->
     <header class="s-header s-header--opaque">
@@ -20,7 +27,18 @@
                  <li class="has-children">
                      <a href="category.php" title="">Categories</a>
                      <ul class="sub-menu">
-                         <li><a href="category.php"></a></li>
+                     <?php 
+                        
+                        while ($rowCategories = mysqli_fetch_assoc($queryCategories)) {
+
+                            $categoryName = $rowCategories['v_category_title'];
+                            $categoryPath = $rowCategories['v_category_path'];
+
+                            echo "<li><a href='categories.php?group=".$categoryPath."'>".$categoryName."</a></li>";
+
+                        }
+                        
+                        ?>
                      </ul>
                  </li>
                  <li><a href="about.php" title="">About</a></li>
@@ -40,14 +58,14 @@
     <div class="s-header__search-inner">
         <div class="row wide">
 
-            <form role="search" method="get" class="s-header__search-form" action="#">
-                <label>
-                    <span class="h-screen-reader-text">Search for:</span>
-                    <input type="search" class="s-header__search-field" placeholder="Search for..." value=""
-                        name="s" title="Search for:" autocomplete="off">
-                </label>
-                <input type="submit" class="s-header__search-submit" value="Search">
-            </form>
+        <form role="search" method="get" class="s-header__search-form" action="search.php">
+                     <label>
+                         <span class="h-screen-reader-text">Search for:</span>
+                         <input type="search" class="s-header__search-field" placeholder="Search for..." value=""
+                             name="query" title="Search for:" autocomplete="off">
+                     </label>
+                     <input type="submit" class="s-header__search-submit" value="Search">
+                 </form>
 
             <a href="#0" title="Close Search" class="s-header__overlay-close">Close</a>
 
